@@ -38,7 +38,7 @@ makeCacheMatrix <- function(x = matrix()) {
                 } else {
                 
                 if(det(z)== 0) message("This Matrix doesn't have an Inverse as it's Determinant is Zero")
-                return(NA)
+                return(NULL)
                 }
         }
         
@@ -46,10 +46,16 @@ makeCacheMatrix <- function(x = matrix()) {
         org_mat <- makemat(x)
         ## Set a matrix 
         set_mat <- function(k) {
+                ##Sets new matrix if the existing is not the same and resets cache 
                 if(!is.null(makemat(k))) {
-                        org_mat <<- makemat(k)
-                        inv_mat <<- NULL
-                        message("New Matrix Set")
+                        ##Check if existing matrix is same as the new matrix
+                        if(!identical(org_mat,makemat(k))) {
+                                org_mat <<- makemat(k)
+                                inv_mat <<- NULL
+                                message("New Matrix Set")
+                        } else {
+                          message("New Matrix is same as the Old (Existing) Matrix")      
+                        } 
                 }
         }
         
@@ -58,7 +64,8 @@ makeCacheMatrix <- function(x = matrix()) {
         
         set_invmat <- function(invmat) inv_mat <<- invmat ## This sets up a inverse matrix if the data is run for first time or if the original data is changed
         
-        get_invmat <- function() inv_mat ##Retrieves the Inverse Matrix
+        ##Retrieves the Inverse Matrix if it exists
+        get_invmat <- function() inv_mat
         
         list(set_mat = set_mat, ##list of functions returned
              get_mat = get_mat,
