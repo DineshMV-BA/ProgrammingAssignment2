@@ -37,9 +37,8 @@ makeCacheMatrix <- function(x = matrix()) {
                         solve(z)
                 } else {
                 
-                if(det(z)== 0) message("This Matrix doesn't have an Inverse as it's Determinant is Non-Zero") 
-                return(NULL)
-                
+                if(det(z)== 0) message("This Matrix doesn't have an Inverse as it's Determinant is Zero")
+                return(NA)
                 }
         }
         
